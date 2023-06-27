@@ -29,7 +29,7 @@
     "author" : "slightlyTechie"
 }
 ```
-6. send a GET request to http://localhost:9090/api/v1/blog/post
+6. send a GET request to http://localhost:9090/api/v1/blog/post/all
 7. send a GET request to http://localhost:9090/api/v1/blog/post/{id}
 8. send a PUT request to http://localhost:9090/api/v1/blog/post/{id} with the following JSON body:
 ```json
@@ -40,7 +40,7 @@
     "updatedBy": "slightlyTechie"
 }
 ```
-10. send a GET request to http://localhost:9090/api/v1/blog/post
+10. send a GET request to http://localhost:9090/api/v1/blog/post/all
 11. send a GET request to http://localhost:9090/api/v1/blog/post/{id}
 12. send a DELETE request to http://localhost:9090/api/v1/blog/post/{id}
 
