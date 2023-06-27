@@ -4,8 +4,11 @@ import com.example.techiechallenge.Model.Post;
 import com.example.techiechallenge.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,9 +24,22 @@ public class PostService {
      * Create a new post
      * @param post the post to create
      */
-    public void createPost(Post post) {
+    public Post createPost(Post post) {
+        if (post.getTitle() == null || post.getTitle().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title is required");
+        }
+        if (post.getBody() == null || post.getBody().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Body is required");
+        }
+        var postToSave = Post.builder()
+                .title(post.getTitle())
+                .body(post.getBody())
+                .author(post.getAuthor())
+                .createdAt(ZonedDateTime.now())
+                .createdBy(post.getAuthor())
+                .build();
 
-        postRepository.save(post);
+        return postRepository.save(postToSave);
     }
 
     /**
@@ -50,17 +66,18 @@ public class PostService {
      * @param id the id of the post to update
      * @param post the post to update
      */
-    public void updatePost(String id, Post post) {
+    public Post updatePost(String id, Post post) {
 
         Post postToUpdate = postRepository.findById(UUID.fromString(id)).orElse(null);
         if (postToUpdate != null) {
             postToUpdate.setTitle(post.getTitle());
             postToUpdate.setBody(post.getBody());
             postToUpdate.setAuthor(post.getAuthor());
-            postToUpdate.setUpdatedAt(post.getUpdatedAt());
+            postToUpdate.setUpdatedAt(ZonedDateTime.now());
             postToUpdate.setUpdatedBy(post.getUpdatedBy());
-            postRepository.save(postToUpdate);
+            return postRepository.save(postToUpdate);
         }
+        return null;
     }
 
     /**

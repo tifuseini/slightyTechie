@@ -19,9 +19,9 @@ public class PostResource {
      * @param post the post to create
      */
     @PostMapping("/post")
-    public void createPost(@RequestBody Post post) {
+    public Post createPost(@RequestBody Post post) {
 
-         postService.createPost(post);
+         return postService.createPost(post);
     }
 
     /**
@@ -51,9 +51,9 @@ public class PostResource {
      * @param post the post to update
      */
     @PutMapping("/post/{id}")
-    public void updatePost(@PathVariable String id, @RequestBody Post post) {
+    public Post updatePost(@PathVariable String id, @RequestBody Post post) {
 
-         postService.updatePost(id, post);
+         return postService.updatePost(id, post);
     }
 
     /**
